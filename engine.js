@@ -24,19 +24,19 @@ const nice = n => {
 };
 
 const LINE_INFO = [
-  { id: 'cannabis', name: 'Cannabis', icon: '🌿', color: '#8ee05f', cook: 'Grower', dealer: 'Corner Dealer', upg: ['Grow Lights', 'Corner Network', 'Top-Shelf Strains'], blurb: 'Where every empire starts. Cheap, cheerful, everywhere.' },
-  { id: 'mushrooms', name: 'Mushrooms', icon: '🍄', color: '#c49bf2', cook: 'Spore Farmer', dealer: 'Festival Vendor', upg: ['Humidity Tents', 'Festival Circuit', 'Golden Strain'], blurb: 'Grown in the dark, sold under the stars.' },
-  { id: 'hashish', name: 'Hashish', icon: '🍫', color: '#d9a55b', cook: 'Presser', dealer: 'Café Contact', upg: ['Hydraulic Presses', 'Coffee-Shop Deals', 'Moroccan Gold'], blurb: 'Old-world product with a loyal crowd.' },
-  { id: 'lsd', name: 'LSD', icon: '🌈', color: '#ff7ac8', cook: 'Chemist', dealer: 'Rave Promoter', upg: ['Blotter Art Studio', 'Warehouse Raves', 'Crystal Clear Batch'], blurb: 'Tiny squares. Enormous margins.' },
-  { id: 'mdma', name: 'MDMA', icon: '💊', color: '#6fb7ff', cook: 'Pill Presser', dealer: 'Club Doorman', upg: ['Custom Pill Molds', 'VIP Lists', 'Designer Logos'], blurb: 'The weekend runs on it.' },
-  { id: 'ketamine', name: 'Ketamine', icon: '🌀', color: '#7de3d6', cook: 'Lab Tech', dealer: 'Afterparty Host', upg: ['Bulk Supplier', 'Underground Clubs', 'Clinical Grade'], blurb: 'The afterparty never ends.' },
-  { id: 'cocaine', name: 'Cocaine', icon: '❄️', color: '#e8eef7', cook: 'Jungle Lab', dealer: 'Smuggler', upg: ['Hidden Airstrips', 'Speedboat Fleet', 'Fish-Scale Grade'], blurb: 'Big money, bigger enemies.' },
-  { id: 'meth', name: 'Methamphetamine', icon: '💎', color: '#4fd1ff', cook: 'Cook', dealer: 'Biker Gang', upg: ['Superlab', 'Trucking Routes', 'Sky-Blue Purity'], blurb: 'Say my name.' },
-  { id: 'opium', name: 'Opium', icon: '🌺', color: '#ff6b6b', cook: 'Poppy Farmer', dealer: 'Caravan', upg: ['Terraced Fields', 'Mountain Passes', 'Aged Resin'], blurb: 'An ancient trade, now under new management.' },
-  { id: 'heroin', name: 'Heroin', icon: '🥀', color: '#c9905a', cook: 'Refinery', dealer: 'Port Contact', upg: ['Refinery Expansion', 'Container Ships', 'Premium Grade'], blurb: 'The darkest corner of the market.' },
-  { id: 'nebula', name: 'Nebula', icon: '🌌', color: '#9d7bff', cook: 'Synth Lab', dealer: 'Darknet Vendor', upg: ['Quantum Reactor', 'Encrypted Markets', 'Stable Formula'], blurb: 'A designer compound nobody can identify. Yet.' },
+  { id: 'cannabis', name: 'Cannabis', icon: '🌿', color: '#3cba54', cook: 'Grower', dealer: 'Corner Dealer', upg: ['Grow Lights', 'Corner Network', 'Top-Shelf Strains'], blurb: 'Where every empire starts. Cheap, cheerful, everywhere.' },
+  { id: 'mushrooms', name: 'Mushrooms', icon: '🍄', color: '#a368f0', cook: 'Spore Farmer', dealer: 'Festival Vendor', upg: ['Humidity Tents', 'Festival Circuit', 'Golden Strain'], blurb: 'Grown in the dark, sold under the stars.' },
+  { id: 'hashish', name: 'Hashish', icon: '🍫', color: '#d4862a', cook: 'Presser', dealer: 'Café Contact', upg: ['Hydraulic Presses', 'Coffee-Shop Deals', 'Moroccan Gold'], blurb: 'Old-world product with a loyal crowd.' },
+  { id: 'lsd', name: 'LSD', icon: '🌈', color: '#ff4fa3', cook: 'Chemist', dealer: 'Rave Promoter', upg: ['Blotter Art Studio', 'Warehouse Raves', 'Crystal Clear Batch'], blurb: 'Tiny squares. Enormous margins.' },
+  { id: 'mdma', name: 'MDMA', icon: '💊', color: '#3d8bff', cook: 'Pill Presser', dealer: 'Club Doorman', upg: ['Custom Pill Molds', 'VIP Lists', 'Designer Logos'], blurb: 'The weekend runs on it.' },
+  { id: 'ketamine', name: 'Ketamine', icon: '🌀', color: '#14b8a6', cook: 'Lab Tech', dealer: 'Afterparty Host', upg: ['Bulk Supplier', 'Underground Clubs', 'Clinical Grade'], blurb: 'The afterparty never ends.' },
+  { id: 'cocaine', name: 'Cocaine', icon: '❄️', color: '#4aa3df', cook: 'Jungle Lab', dealer: 'Smuggler', upg: ['Hidden Airstrips', 'Speedboat Fleet', 'Fish-Scale Grade'], blurb: 'Big money, bigger enemies.' },
+  { id: 'meth', name: 'Methamphetamine', icon: '💎', color: '#0ab3e6', cook: 'Cook', dealer: 'Biker Gang', upg: ['Superlab', 'Trucking Routes', 'Sky-Blue Purity'], blurb: 'Say my name.' },
+  { id: 'opium', name: 'Opium', icon: '🌺', color: '#ff5468', cook: 'Poppy Farmer', dealer: 'Caravan', upg: ['Terraced Fields', 'Mountain Passes', 'Aged Resin'], blurb: 'An ancient trade, now under new management.' },
+  { id: 'heroin', name: 'Heroin', icon: '🥀', color: '#b8733a', cook: 'Refinery', dealer: 'Port Contact', upg: ['Refinery Expansion', 'Container Ships', 'Premium Grade'], blurb: 'The darkest corner of the market.' },
+  { id: 'nebula', name: 'Nebula', icon: '🌌', color: '#7c5cff', cook: 'Synth Lab', dealer: 'Darknet Vendor', upg: ['Quantum Reactor', 'Encrypted Markets', 'Stable Formula'], blurb: 'A designer compound nobody can identify. Yet.' },
   {
-    id: 'darkmatter', name: 'Dark Matter', icon: '🌑', color: '#a77bff', cook: 'Containment Lab', dealer: 'Void Courier',
+    id: 'darkmatter', name: 'Dark Matter', icon: '🌑', color: '#5b34d6', cook: 'Containment Lab', dealer: 'Void Courier',
     upg: ['Event Horizon Reactor', 'Wormhole Routes', 'Pure Void'],
     blurb: 'Not from here. Not from anywhere. Extremely potent.',
     // Alien product: sells for 3× a normal tier step, and draws 3× the heat.

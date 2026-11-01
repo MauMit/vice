@@ -123,6 +123,7 @@ function burst(x, y, emoji, n = 10) {
     setTimeout(() => el.remove(), 820);
   }
 }
+function bump(el) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
 function centerOf(el) { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }
 
 function toast(icon, title, text = '', cls = '') {
@@ -419,15 +420,18 @@ function buildSkyline() {
   let seed = 11;
   const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   let html = '';
-  for (let k = 0; k < 40; k++) html += `<circle cx="${(rnd() * 320).toFixed(1)}" cy="${(rnd() * 70).toFixed(1)}" r="${(rnd() * 0.8 + 0.2).toFixed(2)}" fill="#fff" opacity="${(rnd() * 0.6 + 0.2).toFixed(2)}"/>`;
-  html += '<circle cx="268" cy="30" r="13" fill="#f2eedb" opacity=".9"/><circle cx="263" cy="27" r="13" fill="#0e1020" opacity=".55"/>';
+  html += '<circle cx="250" cy="62" r="34" fill="#fff1a8" opacity=".45"/><circle cx="250" cy="62" r="22" fill="#ffe26b"/>';
+  for (let k = 0; k < 4; k++) {
+    const cx = 20 + k * 80 + rnd() * 30, cy = 18 + rnd() * 30, sc = 0.7 + rnd() * 0.6;
+    html += `<g class="cloud" style="animation-delay:-${(rnd() * 40).toFixed(1)}s" fill="#fff" opacity=".9"><ellipse cx="${cx}" cy="${cy}" rx="${16 * sc}" ry="${7 * sc}"/><ellipse cx="${cx - 8 * sc}" cy="${cy - 3 * sc}" rx="${8 * sc}" ry="${7 * sc}"/><ellipse cx="${cx + 6 * sc}" cy="${cy - 5 * sc}" rx="${9 * sc}" ry="${8 * sc}"/></g>`;
+  }
   let x = -4;
   while (x < 324) {
     const w = 16 + rnd() * 26, h = 35 + rnd() * 95, y = 150 - h;
-    html += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" fill="#0c0e17" stroke="#1d2135" stroke-width=".6"/>`;
-    if (rnd() < 0.3) html += `<rect x="${(x + w / 2 - 0.5).toFixed(1)}" y="${(y - 8).toFixed(1)}" width="1" height="8" fill="#2a2f45"/><circle cx="${(x + w / 2).toFixed(1)}" cy="${(y - 8).toFixed(1)}" r="1.2" fill="#ff4d5e" class="flick"/>`;
+    html += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" fill="${['#7a5fc4', '#8b6fd6', '#6a50b3', '#9a7ee0'][Math.floor(rnd() * 4)]}" stroke="#5a4499" stroke-width=".8" rx="2"/>`;
+    if (rnd() < 0.3) html += `<rect x="${(x + w / 2 - 0.5).toFixed(1)}" y="${(y - 8).toFixed(1)}" width="1" height="8" fill="#5a4499"/><circle cx="${(x + w / 2).toFixed(1)}" cy="${(y - 8).toFixed(1)}" r="1.2" fill="#ff4d5e" class="flick"/>`;
     for (let wy = y + 5; wy < 146; wy += 8) for (let wx = x + 3.5; wx < x + w - 4; wx += 6.5) {
-      html += `<rect class="win${rnd() < 0.03 ? ' flick' : ''}" x="${wx.toFixed(1)}" y="${wy.toFixed(1)}" width="3" height="4" data-t="${rnd().toFixed(3)}" data-k="${Math.floor(rnd() * 12)}" fill="#151827"/>`;
+      html += `<rect class="win${rnd() < 0.03 ? ' flick' : ''}" x="${wx.toFixed(1)}" y="${wy.toFixed(1)}" width="3" height="4" data-t="${rnd().toFixed(3)}" data-k="${Math.floor(rnd() * 12)}" fill="#5a4499"/>`;
     }
     x += w + 1.5;
   }
@@ -442,7 +446,7 @@ function updateSkyline() {
   const frac = 0.05 + 0.075 * n;
   for (const w of windows) {
     const t = +w.dataset.t, k = +w.dataset.k;
-    w.setAttribute('fill', t < frac ? (k < n && t < frac * 0.35 ? E.LINES[k].color : '#ffd56b') : '#151827');
+    w.setAttribute('fill', t < frac ? (k < n && t < frac * 0.35 ? E.LINES[k].color : '#ffe066') : '#5a4499');
   }
   setText($('district'), DISTRICTS[n - 1]);
   setText($('linesCount'), `${n} / ${E.N} lines`);
@@ -768,6 +772,7 @@ function doCook(x, y) {
   orb.classList.remove('pop'); void orb.offsetWidth; orb.classList.add('pop');
   if (x === undefined) [x, y] = centerOf(orb);
   floatText(x, y - 20, '+' + fmt(n, true));
+  burst(x, y, E.LINES[s.selected].icon, 3);
   update();
 }
 function doSell() {
@@ -777,6 +782,8 @@ function doSell() {
   Sound.sell();
   const [x, y] = centerOf($('sellBtn'));
   floatText(x, y - 30, '+' + money(r.cash), 'money');
+  burst(x, y, '💵', 4);
+  bump($('cash'));
   update();
 }
 function doRush() {
@@ -879,6 +886,7 @@ $('content').onclick = e => {
     if (!E.unlockLine(s, i)) { Sound.error(); return; }
     const [x, y] = centerOf(b);
     burst(x, y, E.LINES[i].icon, 18);
+    burst(innerWidth / 2, innerHeight / 3, '🎉', 16);
     Sound.unlock();
     toast(E.LINES[i].icon, `${E.LINES[i].name} unlocked!`, `Hire ${plural(E.LINES[i].cook)} and ${plural(E.LINES[i].dealer)} to get it moving.`, 'good');
     log(`🔓 Expanded into ${E.LINES[i].name}.`, 'good');
