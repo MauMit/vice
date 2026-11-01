@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0c10">
+  <meta name="description" content="VICE: an idle clicker about building a fictional underground empire, from a single plant to the whole world.">
+  <title>VICE · Idle Empire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+</head>
+<body>
+  <div id="flash" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <button class="logo" id="logo" aria-label="VICE">VICE<small>IDLE EMPIRE</small></button>
+
+    <div class="money">
+      <div class="cash" id="cash">$0</div>
+      <div class="ips"><span id="ips">$0</span> / sec</div>
+    </div>
+
+    <div class="heat" id="heatBox">
+      <div class="heat-top">
+        <span class="heat-label">🔥 HEAT</span>
+        <span class="heat-num" id="heatPct">0%</span>
+        <span class="heat-rate" id="heatRate"></span>
+      </div>
+      <div class="heat-bar"><i id="heatFill"></i></div>
+    </div>
+    <button class="btn bribe" id="bribe" title="Pay off the right people (B)">🤝 Bribe <span id="bribeCost"></span></button>
+
+    <div class="top-actions">
+      <div class="rank" id="rank">Nobody</div>
+      <button class="icon-btn" id="soundBtn" aria-label="Toggle sound">🔊</button>
+      <button class="icon-btn" id="settingsBtn" aria-label="Settings">⚙️</button>
+    </div>
+  </header>
+
+  <div class="buffs" id="buffs" aria-live="polite"></div>
+
+  <main class="grid">
+    <!-- LEFT: the clicker -->
+    <section class="op panel" id="op" aria-label="Operation">
+      <div class="line-chips" id="chips"></div>
+
+      <div class="product-head">
+        <div>
+          <div class="eyebrow" id="tierLabel">TIER 01</div>
+          <h1 id="productName">Cannabis</h1>
+          <p class="blurb" id="productBlurb"></p>
+        </div>
+        <div class="price-tag"><small>PER BATCH</small><b id="productPrice">$2</b></div>
+      </div>
+
+      <div class="stage" id="stage">
+        <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+        <button class="orb" id="orb" aria-label="Cook a batch (Space)"><span id="orbIcon">🌿</span></button>
+      </div>
+
+      <div class="stockbox">
+        <div class="stock-main"><b id="stock">0</b><span>batches in stock</span></div>
+        <div class="flow">
+          <span>🧪 <b id="makeRate">0</b>/s</span>
+          <span>💵 <b id="sellRate">0</b>/s</span>
+        </div>
+        <div class="status-pill" id="statusPill">Idle</div>
+      </div>
+
+      <div class="actions">
+        <button class="btn big cook" id="cookBtn">COOK <span id="cookAmt">+1</span></button>
+        <button class="btn big sell" id="sellBtn">SELL <span id="sellAmt">0</span></button>
+      </div>
+
+      <button class="btn rush" id="rushBtn" title="Rush Hour (R)">
+        <span class="rush-ico">⚡</span>
+        <span class="rush-txt"><b>Rush Hour</b><small id="rushDesc">All workers ×2 for 30s</small></span>
+        <span class="rush-state" id="rushState">READY</span>
+      </button>
+
+      <p class="tip" id="tip"></p>
+    </section>
+
+    <!-- CENTER: management -->
+    <section class="center">
+      <nav class="tabs" role="tablist" id="tabs">
+        <button class="tab" data-tab="empire" role="tab">🏭 Empire</button>
+        <button class="tab" data-tab="upgrades" role="tab">⬆️ Upgrades <span class="badge" id="upgBadge"></span></button>
+        <button class="tab" data-tab="fronts" role="tab">🏪 Fronts</button>
+        <button class="tab" data-tab="legacy" role="tab">👑 Legacy <span class="badge" id="repBadge"></span></button>
+        <button class="tab" data-tab="trophies" role="tab">🏆 Trophies</button>
+        <button class="tab" data-tab="stats" role="tab">📊 Stats</button>
+      </nav>
+      <div class="toolbar" id="toolbar"></div>
+      <div id="content"></div>
+    </section>
+
+    <!-- RIGHT: the city -->
+    <aside class="side">
+      <section class="panel city">
+        <svg id="skyline" viewBox="0 0 320 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
+        <div class="city-info">
+          <div><small>TERRITORY</small><b id="district">The Backstreets</b></div>
+          <span id="linesCount">1 / 12</span>
+        </div>
+      </section>
+
+      <section class="panel goal">
+        <small>NEXT GOAL</small>
+        <b id="goalText"></b>
+        <div class="bar"><i id="goalFill"></i></div>
+        <span id="goalSub"></span>
+      </section>
+
+      <section class="panel wire">
+        <div class="wire-head"><span class="dot"></span> THE WIRE</div>
+        <div id="feed"></div>
+      </section>
+    </aside>
+  </main>
+
+  <footer>
+    <b>VICE</b>
+    <span>A satirical idle game. Fictional economy, no real-world information. Drugs wreck real lives. Keep it in the game.</span>
+  </footer>
+
+  <button id="briefcase" class="briefcase" hidden aria-label="Mystery briefcase">💼</button>
+  <div id="toasts" aria-live="polite"></div>
+  <div id="fx" aria-hidden="true"></div>
+
+  <!-- dialogs -->
+  <dialog id="settings">
+    <div class="modal-head"><h2>Settings</h2><button class="icon-btn" data-close>✕</button></div>
+    <label class="switch"><input type="checkbox" id="optSound"> <span>Sound effects</span></label>
+    <label class="switch"><input type="checkbox" id="optParticles"> <span>Floating numbers &amp; particles</span></label>
+    <h3>Save data</h3>
+    <p class="muted">Progress saves automatically in this browser. Use a save code to move your empire to another device.</p>
+    <div class="row">
+      <button class="btn" id="exportBtn">Copy save code</button>
+      <button class="btn" id="downloadBtn">Download save</button>
+      <label class="btn file">Load file<input type="file" id="importFile" accept="application/json,.json,.txt"></label>
+    </div>
+    <textarea id="saveCode" rows="3" placeholder="Paste a save code here…" spellcheck="false"></textarea>
+    <div class="row"><button class="btn" id="importBtn">Load save code</button></div>
+    <p id="settingsMsg" class="muted"></p>
+    <h3>Keyboard</h3>
+    <p class="muted keys"><kbd>Space</kbd> cook · <kbd>S</kbd> sell · <kbd>R</kbd> rush · <kbd>B</kbd> bribe · <kbd>[</kbd> <kbd>]</kbd> switch product</p>
+    <hr>
+    <button class="btn danger" id="resetBtn">Wipe all progress</button>
+  </dialog>
+
+  <dialog id="confirm">
+    <h2 id="confirmTitle"></h2>
+    <p id="confirmText"></p>
+    <div class="row end"><button class="btn" id="confirmNo">Cancel</button><button class="btn primary" id="confirmYes">Confirm</button></div>
+  </dialog>
+
+  <dialog id="notice" class="notice">
+    <div class="notice-icon" id="noticeIcon"></div>
+    <h2 id="noticeTitle"></h2>
+    <div id="noticeBody"></div>
+    <div class="row end"><button class="btn primary" data-close>Got it</button></div>
+  </dialog>
+
+  <script src="engine.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
